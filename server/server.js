@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const host = "5.9.55.116";
-const port = "5000";
+const port = process.env.PORT || 5000;
 const mysql = require("mysql");
 
 app.get("/message", function(request, response) {
