@@ -1,8 +1,7 @@
 const express = require("express");
 const app = express();
-// const host = "5.9.55.116";
-// const port = process.env.PORT || 5000;
-// const mysql = require("mysql");
+const port = process.env.PORT || 5000;
+const mysql = require("mysql");
 console.log(process.env.CLEARDB_DATABASE_URL);
 const myURL = new URL(process.env.CLEARDB_DATABASE_URL);
 
@@ -25,10 +24,8 @@ app.get("/message", function(request, response) {
         "INNER JOIN essence on essence.message_id = message.id\n" +
         "WHERE user.id = 1",
       function(error, results, fields) {
-        // If some error occurs, we throw an error.
         if (error) console.log(error);
 
-        // Getting the 'response' from the database and sending it to our route. This is were the data is.
         console.log(results, "results");
         response.send(results);
       }
