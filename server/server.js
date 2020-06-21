@@ -1,15 +1,17 @@
 const express = require("express");
 const app = express();
-const host = "5.9.55.116";
-const port = process.env.PORT || 5000;
-const mysql = require("mysql");
+// const host = "5.9.55.116";
+// const port = process.env.PORT || 5000;
+// const mysql = require("mysql");
+console.log(process.env.CLEARDB_DATABASE_URL);
+const myURL = new URL(process.env.CLEARDB_DATABASE_URL);
 
 app.get("/message", function(request, response) {
   const connection = mysql.createConnection({
-    host: host,
-    user: "test",
-    password: "whigdyetiabEnok8",
-    database: "test"
+    host: myURL.host,
+    user: myURL.username,
+    password: myURL.password,
+    database: myURL.pathname
   });
   module.exports = connection;
   connection.connect(function(err) {
