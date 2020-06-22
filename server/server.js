@@ -16,7 +16,7 @@ app.get("/message", function(request, response) {
   connection.connect(function(err) {
     if (err) {
       return (
-          response.send(500, { error: "connection.error" + " env:" + process.env.CLEARDB_DATABASE_URL})
+          response.send(500, { error: "connection.error" + " env:" + process.env.CLEARDB_DATABASE_URL + ' --- ' + myURL.host + ' --- ' + myURL.username + ' --- ' + myURL.password + ' --- ' + myURL.pathname})
       )
     }
     connection.query(
