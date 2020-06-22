@@ -10,7 +10,7 @@ app.get("/message", function(request, response) {
     host: myURL.host,
     user: myURL.username,
     password: myURL.password,
-    database: myURL.pathname
+    database: myURL.pathname.substring(1)
   });
   module.exports = connection;
   connection.connect(function(err) {
