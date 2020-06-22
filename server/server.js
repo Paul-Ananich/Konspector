@@ -14,7 +14,11 @@ app.get("/message", function(request, response) {
   });
   module.exports = connection;
   connection.connect(function(err) {
-    if (err) throw err;
+    if (err) {
+      return (
+          response.send(500, { error: "connection.error" + " env:" + process.env.CLEARDB_DATABASE_URL})
+      )
+    }
     connection.query(
       "SELECT message.date, message.source_url, account.name, essence.essence\n" +
         "FROM user\n" +
