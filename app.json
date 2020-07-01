@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "test",
-    "slug": "test",
+    "name": "appOnHeroku",
+    "slug": "appOnHeroku",
     "sdkVersion": "37.0.0",
     "platforms": [
       "ios",
