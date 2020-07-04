@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "appOnHeroku",
-    "slug": "appOnHeroku",
+    "name": "Konspector",
+    "slug": "Konspector",
     "sdkVersion": "37.0.0",
     "platforms": [
       "ios",

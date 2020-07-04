@@ -1,6 +1,5 @@
 import React, { useState, useCallback } from "react";
 import {
-  TouchableOpacity,
   Linking,
   ActivityIndicator,
   FlatList,
@@ -12,14 +11,24 @@ import { Button } from "native-base";
 
 export default function App() {
   let [data, setData] = useState([0]);
+  let [page, setPage] = useState(1);
   let [isFetched, setIsFetched] = useState(false);
   let [isLoading, setIsLoading] = useState(false);
+  let [isMoreDataLoading, setIsMoreDataLoading] = useState(false);
+
+  const prodUrl = `https://newtesttask.herokuapp.com/todayPosts?page=${page}&limit=50`;
+  const devUrl = `http://192.168.0.103:5000/todayPosts?page=${page}&limit=50`;
 
   const fetchData = async () => {
-    fetch("https://newtesttask.herokuapp.com/message")
+    fetch(prodUrl)
       .then(response => response.json())
       .then(responseJson => {
-        return setData(responseJson), setIsFetched(true), setIsLoading(false);
+        return (
+                setData(data.concat(responseJson)),
+                setIsFetched(true),
+                setIsLoading(false),
+                setIsMoreDataLoading(false)
+        )
       })
       .catch(error => {
         console.error(error);
@@ -82,14 +91,32 @@ export default function App() {
         </Button>;
   };
 
+  const handleLoadMore = () => {
+    setIsMoreDataLoading(true)
+    setPage(page+1)
+    fetchData().then(r => console.log(page))
+  }
+
+  const renderFooter = () => {
+    return (
+        isMoreDataLoading ?
+        <View style={styles.customLoader}>
+          <ActivityIndicator size='large' color="#e91e63"/>
+        </View> : null
+    )
+  }
+
   return (
     <View style={styles.container}>
       {isFetched
         ? <View style={styles.contView}>
             <FlatList
               data={data}
-              keyExtractor={item => item.essence}
+              keyExtractor={(item, index) => index.toString()}
               renderItem={({ item }) => renderFlatListItem(item)}
+              onEndReached={handleLoadMore}
+              onEndReachedTreshold={1}
+              ListFooterComponent={renderFooter}
             />
           </View>
         : but()}
@@ -136,5 +163,9 @@ const styles = StyleSheet.create({
   dateButton: {
     marginRight: "70%",
     backgroundColor: "transparent"
-  }
+  },
+  customLoader: {
+    marginTop: 10,
+    alignItems: 'center'
+  },
 });
