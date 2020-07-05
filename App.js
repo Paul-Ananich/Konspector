@@ -5,7 +5,8 @@ import {
   FlatList,
   StyleSheet,
   Text,
-  View
+  View,
+  SearchBar
 } from "react-native";
 import { Button } from "native-base";
 
@@ -105,6 +106,9 @@ export default function App() {
         </View> : null
     )
   }
+  const renderHeader = () => {
+    return <SearchBar placeholder='Type here'/>
+  }
 
   return (
     <View style={styles.container}>
@@ -117,6 +121,7 @@ export default function App() {
               onEndReached={handleLoadMore}
               onEndReachedTreshold={1}
               ListFooterComponent={renderFooter}
+              // ListHeaderComponent={renderHeader}
             />
           </View>
         : but()}

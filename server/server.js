@@ -26,13 +26,7 @@ app.get("/todayPosts", function (request, response) {
     connection.connect(function (err) {
         if (err) {
             return (
-                response.send(500, {
-                    error: "connection.error"
-                        + " env:" + process.env.CLEARDB_DATABASE_URL
-                        + ' --- ' + myURL.host + ' --- '
-                        + myURL.username + ' --- ' + myURL.password
-                        + ' --- ' + myURL.pathname
-                })
+                response.sendStatus(500)
             )
         }
         connection.query(
