@@ -56,5 +56,5 @@ app.get("/todayPosts", function (request, response) {
 });
 
 app.listen(port, () =>
-    console.log(`Example app listening at http://192.168.0.103:${port}/todayPosts?page=1&limit=50`)
+    console.log(`Example app listening at http://192.168.0.101:${port}/todayPosts?page=1&limit=50`)
 );

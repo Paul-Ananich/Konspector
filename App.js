@@ -5,10 +5,9 @@ import {
   FlatList,
   StyleSheet,
   Text,
-  View,
-  SearchBar
-} from "react-native";
+  View } from "react-native";
 import { Button } from "native-base";
+import { SearchBar } from 'react-native-elements';
 
 export default function App() {
   let [data, setData] = useState([0]);
@@ -18,7 +17,7 @@ export default function App() {
   let [isMoreDataLoading, setIsMoreDataLoading] = useState(false);
 
   const prodUrl = `https://newtesttask.herokuapp.com/todayPosts?page=${page}&limit=50`;
-  const devUrl = `http://192.168.0.103:5000/todayPosts?page=${page}&limit=50`;
+  const devUrl = `http://192.168.0.101:5000/todayPosts?page=${page}&limit=50`;
 
   const fetchData = async () => {
     fetch(prodUrl)
@@ -110,6 +109,8 @@ export default function App() {
     return <SearchBar placeholder='Type here'/>
   }
 
+  console.log(devUrl)
+
   return (
     <View style={styles.container}>
       {isFetched
@@ -121,7 +122,7 @@ export default function App() {
               onEndReached={handleLoadMore}
               onEndReachedTreshold={1}
               ListFooterComponent={renderFooter}
-              // ListHeaderComponent={renderHeader}
+              ListHeaderComponent={renderHeader}
             />
           </View>
         : but()}
