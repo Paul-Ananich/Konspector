@@ -2,15 +2,14 @@
   "expo": {
     "name": "Konspector",
     "slug": "Konspector",
-    "sdkVersion": "37.0.0",
+    "version": "1.0.1",
     "platforms": [
       "ios",
       "android",
       "web"
     ],
-    "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icons8.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -23,12 +22,12 @@
       "**/*"
     ],
     "ios": {
-      "bundleIdentifier": "com.pavel.dreamstracker",
+      "bundleIdentifier": "com.pavel.konspector",
       "buildNumber": "1.0.0",
       "supportsTablet": true
     },
     "android": {
-      "package": "com.pavel.dreamstracker",
+      "package": "com.pavel.konspector",
       "versionCode": 1
     }
   }
