@@ -27,7 +27,7 @@ export const Instagram = () => {
     const dispatch = useDispatch()
 
     const fetchData = async () => {
-        fetch(devUrl)
+        fetch(prodUrl)
             .then(response => response.json())
             .then(responseJson => {
                 return (

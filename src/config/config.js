@@ -1,1 +1,1 @@
-export const COLOR = '#222d3b';
+export const COLOR = '#009ec3';

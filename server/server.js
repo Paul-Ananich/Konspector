@@ -3,24 +3,24 @@ const app = express();
 const port = process.env.PORT || 5000;
 const mysql = require("mysql");
 // console.log(process.env.CLEARDB_DATABASE_URL);
-// const myURL = new URL(process.env.CLEARDB_DATABASE_URL);
+const myURL = new URL(process.env.CLEARDB_DATABASE_URL);
 
-const devHost = '5.9.55.116';
-const devUser = 'test';
-const devPassword = 'whigdyetiabEnok8';
-const devName = 'test';
+// const devHost = '5.9.55.116';
+// const devUser = 'test';
+// const devPassword = 'whigdyetiabEnok8';
+// const devName = 'test';
 
-// const prodHost = myURL.host;
-// const prodUser = myURL.username;
-// const prodPassword = myURL.password;
-// const prodName = myURL.pathname.substring(1);
+const prodHost = myURL.host;
+const prodUser = myURL.username;
+const prodPassword = myURL.password;
+const prodName = myURL.pathname.substring(1);
 
 app.get("/todayPosts", function (request, response) {
     const connection = mysql.createConnection({
-        host: devHost,
-        user: devUser,
-        password: devPassword,
-        database: devName
+        host: prodHost,
+        user: prodUser,
+        password: prodPassword,
+        database: prodName
     });
     module.exports = connection;
     connection.connect(function (err) {
