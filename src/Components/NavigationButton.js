@@ -1,22 +1,17 @@
-import {StyleSheet, Text, View} from "react-native";
-import {Button} from "native-base";
+import {StyleSheet, Text, View, TouchableOpacity} from "react-native";
 import React from "react";
 import {useNavigation} from "@react-navigation/native";
 
-export const ShowInstaDataButton = () => {
+export const NavigationButton = ({navName}) => {
 
     const navigation = useNavigation()
     return (
         <View style={styles.content}>
-            <Button
-                style={styles.button}
-                onPress={() => navigation.navigate('Instagram')}
-                full
-                rounded
-                success
+            <TouchableOpacity
+                onPress={() => navigation.navigate(navName)}
             >
-                <Text style={styles.txt}>Instagram</Text>
-            </Button>
+                <Text style={styles.txt}>{navName}</Text>
+            </TouchableOpacity>
         </View>
     )
 };

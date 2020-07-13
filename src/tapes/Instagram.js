@@ -4,7 +4,7 @@ import {SearchBar} from "react-native-elements";
 import {useDispatch, useSelector} from "react-redux";
 import {setDataTC} from "../Redux/reducers/FirstScreenReducer";
 import moment from "moment";
-import {COLOR} from '../config/config'
+import { COLOR2 } from '../config/config'
 import {OpenInstagramURL} from "../Components/OpenInstagram";
 import {Feather} from "@expo/vector-icons";
 
@@ -12,15 +12,15 @@ export const Instagram = () => {
 
     useEffect(() => {
         fetchData()
-    })
+    }, [])
 
     let [page, setPage] = useState(1);
     let [isFetched, setIsFetched] = useState(false);
     let [isMoreDataLoading, setIsMoreDataLoading] = useState(false);
     let [isLoading, setIsLoading] = useState(true)
 
-    const prodUrl = `https://newtesttask.herokuapp.com/todayPosts?page=${page}&limit=25`;
-    const devUrl = `http://192.168.0.101:5000/todayPosts?page=${page}&limit=25`;
+    const prodUrl = `https://newtesttask.herokuapp.com/instagram?page=${page}&limit=25`;
+    const devUrl = `http://192.168.0.104:5000/instagram?page=${page}&limit=25`;
 
     const data = useSelector(state => state.app.dbData)
 
@@ -87,7 +87,7 @@ export const Instagram = () => {
     return (
         <View style={styles.container}>
             {isLoading ? <ActivityIndicator size='large' color="white"/> :
-                < FlatList
+                <FlatList
                     data={data}
                     keyExtractor={(item, index) => index.toString()}
                     renderItem={({item}) => renderFlatListItem(item)}
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: COLOR
+        backgroundColor: COLOR2
     },
     itemContent: {
         flex: 1,
