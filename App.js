@@ -6,7 +6,7 @@ import {COLOR} from './src/config/config'
 import {SecondScreen} from "./src/screens/SecondScreen";
 import {FirstScreen} from "./src/screens/FirstScreen";
 import {Instagram} from "./src/tapes/Instagram"
-import {WhatsApp} from "./src/tapes/WhatsApp";
+import {Groups} from "./src/tapes/Groups";
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
@@ -55,7 +55,7 @@ const MyStack = () => {
             <Stack.Screen name='Home' component={MyTabs}/>
             <Stack.Screen name='Instagram' component={Instagram}
                           options={{title: '', headerRight: () => null}}/>
-            <Stack.Screen name='WhatsApp' component={WhatsApp}
+            <Stack.Screen name='Groups' component={Groups}
                           options={{title: '', headerRight: () => null}}/>
         </Stack.Navigator>
     )

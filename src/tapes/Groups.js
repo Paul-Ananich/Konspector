@@ -1,30 +1,41 @@
-import {StyleSheet, View, Text, ActivityIndicator, FlatList} from "react-native";
-import React, {useEffect, useState} from "react";
-import {COLOR2} from '../config/config'
 import moment from "moment";
+import {COLOR2} from '../config/config'
+import {Feather} from "@expo/vector-icons";
+import React, {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {clearData, setDataTC} from "../Redux/reducers/GroupsReducer";
+import {StyleSheet, View, Text, ActivityIndicator, FlatList} from "react-native";
 
-export const WhatsApp = () => {
+export const Groups = ({route}) => {
+
+    let [page, setPage] = useState(1);
+    let [isMoreDataLoading, setIsMoreDataLoading] = useState(false);
+    let [isLoading, setIsLoading] = useState(true)
+
+    const {id} = route.params
+    const dispatch = useDispatch()
+
+    const data = useSelector(state => state.app.dbData)
+
+    const prodUrl = `https://newtesttask.herokuapp.com/groups/${id}?page=${page}&limit=50`;
+    const devUrl = `http://192.168.0.103:5000/groups/${id}?page=${page}&limit=50`;
 
     useEffect(() => {
         fetchData()
+        return () => {
+            dispatch(clearData())
+        }
     }, [])
 
-    let [page, setPage] = useState(1);
-    let [data, setData] = useState(1);
-    let [isLoading, setIsLoading] = useState(true)
-
-    const prodUrl = `https://newtesttask.herokuapp.com/messengers?page=${page}&limit=25`;
-    const devUrl = `http://192.168.0.104:5000/messengers?page=${page}&limit=25`;
-
-
     const fetchData = async () => {
-        fetch(prodUrl)
+        fetch(devUrl)
             .then(response => response.json())
             .then(responseJson => {
                 return (
-                    setData(responseJson),
-                        setIsLoading(false)
-            )
+                    dispatch(setDataTC(responseJson)),
+                        setIsLoading(false),
+                        setIsMoreDataLoading(false)
+                )
             })
             .catch(error => {
                 console.error(error);
@@ -37,6 +48,7 @@ export const WhatsApp = () => {
                 <View style={styles.firstGroup}>
                     <Text style={styles.name}>
                         {item.name}
+                        <Feather name="arrow-up-right" size={24} color="black"/>
                     </Text>
                     <Text style={styles.substanceText}>
                         {item.essence}
@@ -51,16 +63,32 @@ export const WhatsApp = () => {
             : null;
     };
 
-    console.log(data)
+    const handleLoadMore = () => {
+        setIsMoreDataLoading(true)
+        setPage(page + 1)
+        fetchData()
+    }
+
+    const renderFooter = () => {
+        return (
+            isMoreDataLoading ?
+                <View style={styles.customLoader}>
+                    <ActivityIndicator size='large' color="white"/>
+                </View> : null
+        )
+    }
 
     return (
         <View style={styles.container}>
             {isLoading ? <ActivityIndicator size='large' color="white"/> :
                 <FlatList
+                    inverted={-1}
                     data={data}
                     keyExtractor={(item, index) => index.toString()}
                     renderItem={({item}) => renderFlatListItem(item)}
+                    onEndReached={handleLoadMore}
                     onEndReachedTreshold={0}
+                    ListFooterComponent={renderFooter}
                 />
             }
         </View>
@@ -78,9 +106,9 @@ const styles = StyleSheet.create({
         flex: 1,
         margin: 6,
         backgroundColor: 'white',
-        borderBottomLeftRadius: 15,
-        borderBottomRightRadius: 15,
-        borderTopRightRadius: 15,
+        borderBottomLeftRadius: 20,
+        borderBottomRightRadius: 20,
+        borderTopRightRadius: 20,
         padding: 10
     },
     firstGroup: {

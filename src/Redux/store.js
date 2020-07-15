@@ -1,9 +1,9 @@
 import {combineReducers, createStore, applyMiddleware} from "redux";
 import thunk from "redux-thunk";
-import {FirstScreenReducer} from "./reducers/FirstScreenReducer";
+import {GroupsReducer} from "./reducers/GroupsReducer";
 
 let reducers = combineReducers({
-    app: FirstScreenReducer,
+    app: GroupsReducer,
 });
 
 let store = createStore(reducers, applyMiddleware(thunk));

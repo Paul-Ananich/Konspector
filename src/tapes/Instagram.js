@@ -2,7 +2,7 @@ import {ActivityIndicator, FlatList, TouchableOpacity, StyleSheet, Text, View} f
 import React, {useEffect, useState} from "react";
 import {SearchBar} from "react-native-elements";
 import {useDispatch, useSelector} from "react-redux";
-import {setDataTC} from "../Redux/reducers/FirstScreenReducer";
+import {setDataTC} from "../Redux/reducers/GroupsReducer";
 import moment from "moment";
 import { COLOR2 } from '../config/config'
 import {OpenInstagramURL} from "../Components/OpenInstagram";
@@ -27,7 +27,7 @@ export const Instagram = () => {
     const dispatch = useDispatch()
 
     const fetchData = async () => {
-        fetch(prodUrl)
+        fetch(devUrl)
             .then(response => response.json())
             .then(responseJson => {
                 return (
@@ -66,9 +66,6 @@ export const Instagram = () => {
                 <View style={styles.firstGroup}>
                     <Text style={styles.name}>
                         {item.name}
-                        {/*<OpenInstagramURL*/}
-                        {/*    url={item.source_url}*/}
-                        {/*/>*/}
                         <Feather name="arrow-up-right" size={24} color="black"/>
                     </Text>
                     <Text style={styles.substanceText}>

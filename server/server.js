@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 5000;
 const mysql = require("mysql");
-console.log(process.env.CLEARDB_DATABASE_URL);
+// console.log(process.env.CLEARDB_DATABASE_URL);
 const myURL = new URL(process.env.CLEARDB_DATABASE_URL);
 
 // const devHost = '5.9.55.116';
@@ -55,7 +55,36 @@ app.get("/instagram", function (request, response) {
     });
 });
 
-app.get("/messengers", function (request, response) {
+app.get("/groups", function (request, response) {
+    const connection = mysql.createConnection({
+        host: devHost,
+        user: devUser,
+        password: devPassword,
+        database: devName
+    });
+    module.exports = connection;
+    connection.connect(function (err) {
+        if (err) {
+            return (
+                response.sendStatus(500)
+            )
+        }
+        connection.query(
+            "SELECT user_feed.name, user_feed.feed_entity_id, `group`.source_type\n" +
+            "FROM user_feed\n" +
+            "inner join `group` on `group`.`id` = user_feed.feed_entity_id\n" +
+            "WHERE user_feed.user_id = 1 and user_feed.feed_type = 'group'",
+            function (error, results) {
+                if (error) console.log(error);
+
+                console.log(results, "groups");
+                response.send(results);
+            }
+        );
+    });
+});
+
+app.get(`/groups/:id`, function (request, response) {
     const connection = mysql.createConnection({
         host: devHost,
         user: devUser,
@@ -72,11 +101,11 @@ app.get("/messengers", function (request, response) {
         connection.query(
             "SELECT message.date, message.source_url, account.name, essence.essence\n" +
             "FROM user\n" +
-            "INNER JOIN group_user ON group_user.user_id = user.id\n" +
-            "INNER JOIN message on message.group_id = group_user.group_id\n" +
+            "INNER JOIN message on message.group_id = ?\n" +
             "INNER JOIN account ON message.account_id = account.id\n" +
             "INNER JOIN essence on essence.message_id = message.id\n" +
             "WHERE user.id = 1",
+            [request.params.id],
             function (error, results) {
                 if (error) console.log(error);
 
@@ -88,7 +117,6 @@ app.get("/messengers", function (request, response) {
 
                 const resultResponse = results.slice(startIndex, endIndex)
 
-                console.log(resultResponse, "telegram & whatsapp");
                 response.send(resultResponse);
             }
         );
@@ -96,5 +124,5 @@ app.get("/messengers", function (request, response) {
 });
 
 app.listen(port, () =>
-    console.log(`Example app listening at http://192.168.0.104:${port}/instagram?page=1&limit=25`)
+    console.log(`Example app listening at http://192.168.0.103:${port}/groups/6?page=1&limit=50`)
 );
