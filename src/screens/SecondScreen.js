@@ -5,7 +5,7 @@ import { NavigationButton } from "../Components/NavigationButton";
 
 export const SecondScreen = () => {
 
-    let [data, setData] = useState(1);
+    let [data, setData] = useState([]);
 
     const groupsSource = require('../../assets/groups.jpg')
     const instaSource = require('../../assets/instagram.jpg')
